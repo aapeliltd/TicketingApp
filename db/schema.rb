@@ -10,7 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_000014) do
+ActiveRecord::Schema.define(version: 2020_06_23_163722) do
+
+  create_table "comments", options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "body"
+    t.boolean "is_agent_comment"
+    t.bigint "ticket_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["ticket_id"], name: "index_comments_on_ticket_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "surveys", options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "comment"
+    t.integer "rating"
+    t.bigint "ticket_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ticket_id"], name: "index_surveys_on_ticket_id"
+  end
+
+  create_table "tickets", options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.string "ticket_no"
+    t.boolean "is_close"
+    t.bigint "user_id"
+    t.bigint "survey_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_id"], name: "index_tickets_on_survey_id"
+    t.index ["user_id"], name: "index_tickets_on_user_id"
+  end
 
   create_table "users", options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"

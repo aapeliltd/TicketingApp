@@ -9,11 +9,8 @@ class Api::V1::AuthenticationController < ApplicationController
             render :error, status: :unauthorized
         else
             if(@user.authenticate(params[:password]))
-                secret_key = Rails.application.secrets.secret_key_base
-                @token = JWT.encode({
-                    id: @user.id,
-                    username: @user.username
-                }, secret_key)
+                # secret_key = Rails.application.secrets.secret_key_base
+                @token = generate_token(@user.id, @user.username)
                 render :ok_user, status: :ok
             else
                 @message = "Invalid username/password combination"

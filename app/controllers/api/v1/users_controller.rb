@@ -10,11 +10,17 @@ class Api::V1::UsersController < ApplicationController
         @user.password = params[:password]
          if @user.valid?
             @user.save
-            render :create, status: :created
+            # try and log the user in
+            @token = generate_token(@user.id, @user.username)
+            if @user.authenticate(params[:password])
+                render :create, status: :created
+            end
+            
          else
             render json: { errors: @user.errors},status: 422
          end  
     end
+
 
 
 
