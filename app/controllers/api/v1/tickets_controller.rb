@@ -1,7 +1,7 @@
 class Api::V1::TicketsController < ApplicationController
     before_action :authenticate
     def index
-        @tickets = Ticket.all
+        @tickets = Ticket.all.order(created_at: :desc)
         render :index, status: :ok
     end
     def create
@@ -38,7 +38,7 @@ class Api::V1::TicketsController < ApplicationController
     def get_user_tickets 
         @user = User.find_by(id: params[:id])
         if(@user) 
-            @tickets = @user.tickets
+            @tickets = @user.tickets.order(created_at: :desc)
             render :user_tickets, status: :ok
         else
             render_error_message
