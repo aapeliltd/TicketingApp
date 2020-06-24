@@ -12,6 +12,7 @@ json.data do
             json.body ticket.body
             json.is_close ticket.is_close
             json.created_at ticket.created_at
+            json.ticket_no ticket.ticket_no
             json.comments do 
                 json.array! ticket.comments do |comment|
                     @user = User.find(comment.user_id)
