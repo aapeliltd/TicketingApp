@@ -9,7 +9,6 @@ Rails.application.routes.draw do
      get  "users/:id/tickets", to: "tickets#get_user_tickets"
      post "ticket/survey", to: "surveys#create"
      resources :tickets, only: [:index, :create]
-     
    end
   end
 end
